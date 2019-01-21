@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+pattern = (ARGV[0] || '4-4-8-4').split('-').map(&:to_i)
+
+timing = {
+  Breathe_in:  pattern[0],
+  Hold_1:      pattern[1],
+  Breathe_out: pattern[2],
+  Hold_2:      pattern[3]
+}
+
+initial_delay = 3
+puts
+puts "Please get ready to breathe in."
+sleep initial_delay
+
+def sum_format(seconds)
+        minutes = seconds / 60
+        seconds = seconds % 60
+        "#{minutes}m #{seconds}s"
+end
+
+cycle = 0
+loop do
+  puts
+  timing.each do |phase, seconds|
+    printf("%-30s", "#{phase.to_s.gsub('_', ' ').gsub(/ (1|2)$/, '')} for #{seconds} seconds ")
+    seconds.times do |second|
+      putc '.'
+      sleep 1
+    end
+    puts
+  end
+  sum = timing.values.inject(0) { |value, s| s += value; s }
+       
+  puts "Cycle #{cycle += 1} complete. Practised #{sum_format(sum * cycle)}."
+end
