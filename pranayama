@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-pattern = (ARGV[0] || '4-4-8-4').split('-').map(&:to_i)
+pattern = (ARGV[0] || '4-4-8-4').split(/[-\/]/).map(&:to_i)
 
 timing = {
   Breathe_in:  pattern[0],
@@ -32,6 +32,6 @@ loop do
     puts
   end
   sum = timing.values.inject(0) { |value, s| s += value; s }
-       
+
   puts "Cycle #{cycle += 1} complete. Practised #{sum_format(sum * cycle)}."
 end
